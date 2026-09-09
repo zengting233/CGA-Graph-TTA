@@ -1,0 +1,38 @@
+data:
+  root: ./data
+  datasets: [Cora, CiteSeer, Cornell, Texas, Wisconsin, Chameleon, Squirrel]
+  split: official
+  geom_gcn_split: 0
+  normalize_features: true
+model:
+  name: GraphSAGE
+  hidden_dim: 64
+  dropout: 0.5
+  activation: elu
+train:
+  epochs: 200
+  patience: 30
+  optimizer: AdamW
+  lr: 0.01
+  weight_decay: 0.0005
+shift:
+  type: random_rewire
+  severity: 0.5
+adapt:
+  mask: test
+  alpha: 2.0
+  eps: 1.0e-8
+run:
+  seeds: [0, 1, 2]
+  device: auto
+adapter: TENT
+tent:
+  gate_transform: identity
+  steps: 20
+  lr: 0.0015
+  weight_decay: 0.0
+  adapt_head_only: true
+  gamma_ent: 4.0
+  gamma_anchor: 0.5
+  lambda_anchor: 12.0
+  lr_scale: 1.0
